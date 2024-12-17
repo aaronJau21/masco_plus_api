@@ -3,6 +3,7 @@ import { AuthRepository } from 'src/context/domain/auth/auth.repository';
 import { LoginDto } from './dtos/login.dto';
 import { HashService } from 'src/lib/hash/hash.service';
 import { JsonWebTokenService } from 'src/lib/json-web-token/json-web-token.service';
+import { IAuthResponse } from './interfaces/auth-response.interface';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
     private readonly jsonWebTokenService: JsonWebTokenService,
   ) {}
 
-  async login(data: LoginDto) {
+  async login(data: LoginDto): Promise<IAuthResponse> {
     const user = await this.authRepository.login(data);
 
     const compare = await this.hashService.comparePassword(
