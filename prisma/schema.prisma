@@ -19,3 +19,23 @@ model User {
   password String
   role     RoleUser @default(EMPLOYE)
 }
+
+model Brand {
+  id       String     @id @default(uuid())
+  name     String     @unique
+  logo     String?    @db.Text
+  Products Products[]
+}
+
+model Products {
+  id          String @id @default(uuid())
+  name        String
+  brand_id    String
+  price       Float  @default(0.0)
+  stock       Int    @default(0)
+  descuento   Int    @default(0)
+  description String @db.Text
+  logo        String @db.Text
+
+  Brand Brand @relation(fields: [brand_id], references: [id], onDelete: Cascade)
+}
