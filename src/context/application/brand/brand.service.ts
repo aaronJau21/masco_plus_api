@@ -37,4 +37,10 @@ export class BrandService {
       brands: brands,
     };
   }
+
+  async deleteBrand(id: string): Promise<{ msg: string }> {
+    await this.brandRepository.delete(id);
+
+    return { msg: 'Marca eliminada' };
+  }
 }

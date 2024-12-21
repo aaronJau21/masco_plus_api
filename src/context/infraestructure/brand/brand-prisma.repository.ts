@@ -50,4 +50,16 @@ export class BrandPrismaRepository implements BrandRepository {
 
     return brands;
   }
+
+  async delete(id: string): Promise<void> {
+    const brand = await this.prisma.brand.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (brand === null) throw new NotFoundException(`La Marca no existe`);
+
+    await this.prisma.brand.delete({ where: { id: brand.id } });
+  }
 }
