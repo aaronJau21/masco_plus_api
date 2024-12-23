@@ -28,14 +28,20 @@ model Brand {
 }
 
 model Products {
-  id          String @id @default(uuid())
-  name        String
-  brand_id    String
-  price       Float  @default(0.0)
-  stock       Int    @default(0)
-  descuento   Int    @default(0)
-  description String @db.Text
-  logo        String @db.Text
+  id            String  @id @default(uuid())
+  name          String
+  brand_id      String
+  price         Decimal @default(0.0)
+  stock         Int     @default(0)
+  descuento     Int     @default(0)
+  description   String?  @db.Text
+  status        Boolean @default(false)
+  quantity_sold Int     @default(0)
 
   Brand Brand @relation(fields: [brand_id], references: [id], onDelete: Cascade)
+}
+
+model ProductDescription {
+  id          String @id @default(uuid())
+  description Json   @db.Json
 }
