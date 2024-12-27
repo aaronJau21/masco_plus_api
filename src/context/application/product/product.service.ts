@@ -35,6 +35,11 @@ export class ProductService {
     return { products };
   }
 
+  async findOne(id: string): Promise<{ product: Product }> {
+    const product = await this.productRepository.findOne(id);
+    return { product };
+  }
+
   async delete(id: string): Promise<{ msg: string }> {
     await this.productRepository.delete(id);
 

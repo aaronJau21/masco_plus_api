@@ -25,8 +25,14 @@ export class ProductPrismaRepository implements ProductRepository {
     return products;
   }
 
-  async delete(id: string): Promise<void> {
+  async findOne(id: string): Promise<Product | null> {
     const product = await this.prisma.products.findFirst({ where: { id } });
+    if (product === null) throw new NotFoundException('No existe el producto');
+    return product;
+  }
+
+  async delete(id: string): Promise<void> {
+    const product = await this.findOne(id);
     if (product === null) throw new NotFoundException('No existe el producto');
     await this.prisma.products.delete({ where: { id: id } });
   }

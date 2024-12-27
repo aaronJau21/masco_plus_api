@@ -27,6 +27,11 @@ export class ProductController {
     return await this.productService.find();
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return await this.productService.findOne(id);
+  }
+
   @UseGuards(UserGuard)
   @Delete(':id')
   async deleteProduct(@Param('id') id: string) {
