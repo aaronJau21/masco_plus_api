@@ -1,8 +1,8 @@
+import { Prisma } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export class Product {
   constructor(
-    public id: string,
     public name: string,
     public brand_id: string,
     public status: boolean,
@@ -11,5 +11,12 @@ export class Product {
     public stock?: number,
     public description?: string,
     public price?: Decimal,
+  ) {}
+}
+
+export class ProductDescription {
+  constructor(
+    public product_id: string,
+    public description?: Prisma.InputJsonValue,
   ) {}
 }

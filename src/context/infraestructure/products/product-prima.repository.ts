@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateProductDto } from 'src/context/application/product/dtos/update-product.dto';
 import { UpdateStatusProductDto } from 'src/context/application/product/dtos/update-status-product.dto';
+import { Prisma, ProductDescription } from '@prisma/client';
 
 @Injectable()
 export class ProductPrismaRepository implements ProductRepository {
@@ -64,5 +65,23 @@ export class ProductPrismaRepository implements ProductRepository {
     });
 
     return updatedProduct;
+  }
+
+  // Product Description
+  async saveDescription(
+    id: string,
+    data: Prisma.InputJsonValue,
+  ): Promise<ProductDescription> {
+    const product = await this.findOne(id);
+    if (product === null) throw new NotFoundException('No existe el producto');
+
+    const description = await this.prisma.productDescription.create({
+      data: {
+        product_id: id,
+        description: data,
+      },
+    });
+
+    return description;
   }
 }

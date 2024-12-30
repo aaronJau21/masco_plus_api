@@ -8,6 +8,7 @@ import { IBrandCreateResult } from './interfaces/brand-create-result.interface';
 import { Product } from 'src/context/domain/products/product.entity';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { UpdateStatusProductDto } from './dtos/update-status-product.dto';
+import { Prisma, ProductDescription } from '@prisma/client';
 
 @Injectable()
 export class ProductService {
@@ -59,5 +60,12 @@ export class ProductService {
     await this.productRepository.delete(id);
 
     return { msg: 'Producto eliminado' };
+  }
+
+  async saveDescription(
+    id: string,
+    data: Prisma.InputJsonValue,
+  ): Promise<ProductDescription> {
+    return await this.productRepository.saveDescription(id, data);
   }
 }
