@@ -6,6 +6,8 @@ import { ProductRepository } from 'src/context/domain/products/product.repositor
 import { CreateProductDto } from './dtos/create-product.dto';
 import { IBrandCreateResult } from './interfaces/brand-create-result.interface';
 import { Product } from 'src/context/domain/products/product.entity';
+import { UpdateProductDto } from './dtos/update-product.dto';
+import { UpdateStatusProductDto } from './dtos/update-status-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -37,6 +39,19 @@ export class ProductService {
 
   async findOne(id: string): Promise<{ product: Product }> {
     const product = await this.productRepository.findOne(id);
+    return { product };
+  }
+
+  async update(id: string, data: UpdateProductDto): Promise<Product> {
+    const product = await this.productRepository.update(id, data);
+    return product;
+  }
+
+  async updateStatus(
+    id: string,
+    status: UpdateStatusProductDto,
+  ): Promise<{ product: Product }> {
+    const product = await this.productRepository.updateStatus(id, status);
     return { product };
   }
 
