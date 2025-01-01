@@ -40,12 +40,21 @@ model Products {
 
   Brand              Brand                @relation(fields: [brand_id], references: [id], onDelete: Cascade)
   ProductDescription ProductDescription[]
+  ProductImage       ProductImage[]
 }
 
 model ProductDescription {
   id          String @id @default(uuid())
   description Json   @db.Json
   product_id  String
+
+  Products Products @relation(fields: [product_id], references: [id], onDelete: Cascade)
+}
+
+model ProductImage {
+  id         String @id @default(uuid())
+  image      String @db.Text
+  product_id String
 
   Products Products @relation(fields: [product_id], references: [id], onDelete: Cascade)
 }

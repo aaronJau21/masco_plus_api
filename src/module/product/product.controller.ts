@@ -9,6 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { InputJsonValue } from '@prisma/client/runtime/library';
 import { UserGuard } from 'src/context/application/auth/guards/auth/user.guard';
 import { CreateProductDto } from 'src/context/application/product/dtos/create-product.dto';
 import { UpdateProductDto } from 'src/context/application/product/dtos/update-product.dto';
@@ -58,11 +59,9 @@ export class ProductController {
     return await this.productService.delete(id);
   }
 
+  @UseGuards(UserGuard)
   @Post('description/:id')
-  async saveDescription(
-    @Param('id') id: string,
-    @Body() dto: Prisma.InputJsonValue,
-  ) {
+  async saveDescription(@Param('id') id: string, @Body() dto: InputJsonValue) {
     return await this.productService.saveDescription(id, dto);
   }
 }

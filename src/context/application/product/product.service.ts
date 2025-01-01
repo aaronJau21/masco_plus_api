@@ -5,10 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { ProductRepository } from 'src/context/domain/products/product.repository';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { IBrandCreateResult } from './interfaces/brand-create-result.interface';
-import { Product } from 'src/context/domain/products/product.entity';
+import {
+  Product,
+  ProductDescription,
+} from 'src/context/domain/products/product.entity';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { UpdateStatusProductDto } from './dtos/update-status-product.dto';
-import { Prisma, ProductDescription } from '@prisma/client';
+import { InputJsonValue } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class ProductService {
@@ -64,7 +67,7 @@ export class ProductService {
 
   async saveDescription(
     id: string,
-    data: Prisma.InputJsonValue,
+    data: InputJsonValue,
   ): Promise<ProductDescription> {
     return await this.productRepository.saveDescription(id, data);
   }

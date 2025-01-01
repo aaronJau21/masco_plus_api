@@ -1,7 +1,7 @@
 import { UpdateProductDto } from 'src/context/application/product/dtos/update-product.dto';
-import { Product } from './product.entity';
+import { Product, ProductDescription } from './product.entity';
 import { UpdateStatusProductDto } from 'src/context/application/product/dtos/update-status-product.dto';
-import { Prisma, ProductDescription } from '@prisma/client';
+import { InputJsonValue } from '@prisma/client/runtime/library';
 
 export interface ProductRepository {
   save(product: Product): Promise<Product>;
@@ -14,6 +14,6 @@ export interface ProductRepository {
   // Product Description
   saveDescription(
     id: string,
-    description: Prisma.InputJsonValue,
+    description: InputJsonValue,
   ): Promise<ProductDescription>;
 }

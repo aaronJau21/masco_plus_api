@@ -1,10 +1,13 @@
-import { Product } from 'src/context/domain/products/product.entity';
+import {
+  Product,
+  ProductDescription,
+} from 'src/context/domain/products/product.entity';
 import { ProductRepository } from 'src/context/domain/products/product.repository';
 import { PrismaService } from '../prisma/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateProductDto } from 'src/context/application/product/dtos/update-product.dto';
 import { UpdateStatusProductDto } from 'src/context/application/product/dtos/update-status-product.dto';
-import { Prisma, ProductDescription } from '@prisma/client';
+import { InputJsonValue } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class ProductPrismaRepository implements ProductRepository {
@@ -70,7 +73,7 @@ export class ProductPrismaRepository implements ProductRepository {
   // Product Description
   async saveDescription(
     id: string,
-    data: Prisma.InputJsonValue,
+    data: InputJsonValue,
   ): Promise<ProductDescription> {
     const product = await this.findOne(id);
     if (product === null) throw new NotFoundException('No existe el producto');
